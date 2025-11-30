@@ -1,64 +1,96 @@
+/* ----------------------------- */
+/* 1. Global Reset + Base Styles */
+/* ----------------------------- */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* prevent scrolling */
+}
+
+a {
+    text-decoration: none;
+}
+
+button:focus-visible {
+    outline: 2px solid #4a90e2 !important;
+    outline: -webkit-focus-ring-color auto 5px !important;
+}
+
+/* ----------------------------- */
+/* 2. Background Container */
+/* ----------------------------- */
 .image {
-    width: 1621px;
-    height: 1037px;
+    position: relative;
+    width: 900;
+    height: 1920;
+    background-image: url("img/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 
-.image .img {
-    position: fixed;
-    top: 7px;
-    left: 90px;
-    width: 1440px;
-    height: 1024px;
-    aspect-ratio: 1.56;
-    object-fit: cover;
+/* ----------------------------- */
+/* 3. Main Logo Centered */
+/* ----------------------------- */
+.removebg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 549px; /* max for large screens */
+    height: auto;
+    z-index: 2;
 }
 
-/*logo*/
-.image {
-    width: 549px;
-    height: 549px;
+/* ----------------------------- */
+/* 4. Start Button Below Logo */
+/* ----------------------------- */
+.png-clipart-push {
+    position: absolute;
+    top: 65%;       /* below the main logo */
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 436px;
+    height: auto;
+    cursor: pointer;
+    z-index: 3;
+   
 }
 
-.image .removebg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 549px;
-    height: 549px;
-    aspect-ratio: 1;
-    object-fit: cover;
-}
 
 
-/*start*/
-.image {
-    width: 436px;
-    height: 201px;
-}
-
-.image .png-clipart-push {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 436px;
-    height: 201px;
-    aspect-ratio: 2.17;
-    object-fit: cover;
-}
-
-/*small icon logo*/
-.image {
-    width: 200px;
-    height: 164px;
-}
-
-.image .logo-removebg {
-    position: fixed;
-    top: 40px;
-    left: 0;
+/* ----------------------------- */
+/* 5. Small Icon Logo (top-left) */
+/* ----------------------------- */
+.logo-removebg {
+    position: absolute;
+    top: 5%;
+    left: 5%;
     width: 162px;
-    height: 124px;
-    aspect-ratio: 1.23;
-    object-fit: cover;
+    height: auto;
+   z-index: 4;
 }
 
+/* ----------------------------- */
+/* 6. Optional: Responsive tweaks */
+/* ----------------------------- */
+@media (max-width: 768px) {
+    .removebg {
+        width: 40vw;
+    }
+    .png-clipart-push {
+        width: 30vw;
+    }
+    .logo-removebg {
+        width: 15vw;
+    }
+}
