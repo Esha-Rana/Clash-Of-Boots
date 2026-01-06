@@ -96,7 +96,7 @@
     background-image: url(./img/team-2.png);
     position: absolute;
     top:0px;
-    left:350px;
+    left:380px;
     font-size: small;
 }
 
@@ -126,12 +126,12 @@
 .red-score{
     position:absolute;
     top:5px;
-    left:600px;
+    left:400px;
 }
 .blue-score{
     position: absolute;
     top:5px;
-    right:600px;
+    right:400px;
 }
 
 .score-count {
@@ -181,7 +181,7 @@
 
 
 .top-bar {
-    width: 85%;                        /* long rectangle */
+    width: 75%;                        /* long rectangle */
     height: 90px;                       /* rectangle height */
     background-color: rgba(95, 145, 199, 0.95); /* white with transparency */
     border-radius: 60px;                /* makes it curved horizontally */
@@ -222,17 +222,17 @@
 
 .team-red {
     font-family: 'Times New Roman', Times, serif;
-    position: fixed;
-    top: 3px;
-    left:150px;
+    position: absolute;
+    top: 5px;
+    left:250px;
     color:rgb(32, 11, 51);
 
 }
 .team-blue {
     font-family: 'Times New Roman', Times, serif;
-    position: fixed;
-    top:3px;
-    left:1090px;
+    position: absolute;
+    top: 5px;
+    left:250px;
     color:rgb(45, 30, 10);
 }
 
