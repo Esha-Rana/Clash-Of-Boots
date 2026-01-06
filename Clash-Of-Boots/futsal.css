@@ -74,23 +74,30 @@
     width: 48%;
     height: 11vh;
     display: flex;
+    font-size: smaller;
+    position:relative;
 }
 .team-1,
 .team-2 {
-    width: 28%;
-    height: 150%;
+    width: 22%;
+    height: 120%;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 .team-1 {
     background-image: url(./img/team-1.png);
-    background-position: left;
+    position: absolute;
+    top: 0px;
+    left:80px;
 }
 
 .team-2 {
     background-image: url(./img/team-2.png);
-    background-position: right;
+    position: absolute;
+    top:0px;
+    left:350px;
+    font-size: small;
 }
 
 .player-name {
@@ -108,6 +115,24 @@
 .blue-name {
     float: right;
 }
+.red-score,
+.blue-score{
+    display:inline-block;
+    width: 50px;
+    font-weight: bold;
+    color: #c7deef;
+
+}
+.red-score{
+    position:absolute;
+    top:5px;
+    left:600px;
+}
+.blue-score{
+    position: absolute;
+    top:5px;
+    right:600px;
+}
 
 .score-count {
     width: 10%;
@@ -115,9 +140,9 @@
     font-family: 'Times New Roman', Times, serif;
     font-weight: bolder;
     display: inline-flex;
-    position: fixed;
+    /* position: fixed;
     top:60px;
-    left:100px;
+    left:100px; */
 }
 
 
@@ -126,9 +151,9 @@
     height: 4vh;
     display: flex;
     justify-content: center;
-    position: fixed;
-    top:65px;
-    left:610px;;
+    position: relative;
+    top:70px;
+    left:8px;
 }
 
 .turn {
@@ -145,13 +170,12 @@
 }
 
 .turn p {
-    /* height: 100%;
-    width: 100%; */
+    height: 100%;
+    width: 100%;
     font-size: 30px;
-    position:fixed;
-    top:40px;
-    left:685px;
-    padding: 40px 0px 0px 10px;
+    position:absolute;
+    top:10px;
+    left:70px;
 }
 
 
@@ -173,7 +197,7 @@
     box-shadow: 0 6px 15px rgba(0,0,0,0.25); /* optional shadow */
 
     /* 🔥 TOP CENTER POSITION */
-    position: fixed;                    /* stays at top of screen */
+    position:absolute;                    /* stays at top of screen */
     top: 0px;                           /* distance from top */
     left: 50%;                           /* horizontal center */
     transform: translateX(-50%);         /* center exactly */
