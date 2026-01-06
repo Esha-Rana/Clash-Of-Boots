@@ -175,14 +175,14 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     // --- CREATE GOALS (as sensors) ---
-    var goalLeft = Bodies.rectangle(fieldMarginX + 65, height / 2 + 5, GOAL_DEPTH + 50, GOAL_WIDTH + 16, {
+    var goalLeft = Bodies.rectangle(fieldMarginX + 55, height / 2 + 5, GOAL_DEPTH + 20, GOAL_WIDTH + 16, {
         isStatic: true,
         isSensor: true,
         label: 'GoalLeft',
         render: { fillStyle: 'transparent' }
     });
 
-    var goalRight = Bodies.rectangle(width - fieldMarginX - 65, height / 2 + 5, GOAL_DEPTH + 50, GOAL_WIDTH + 16, {
+    var goalRight = Bodies.rectangle(width - fieldMarginX - 55, height / 2 + 5, GOAL_DEPTH + 20, GOAL_WIDTH + 16, {
         isStatic: true,
         isSensor: true,
         label: 'GoalRight',
