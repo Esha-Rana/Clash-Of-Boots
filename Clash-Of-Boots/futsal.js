@@ -175,14 +175,14 @@ document.addEventListener("DOMContentLoaded", function () {// event listner is u
     ];
 
     // --- CREATE GOALS (as sensors) ---
-    var goalLeft = Bodies.rectangle(fieldMarginX + 65, height / 2 + 5, GOAL_DEPTH + 50, GOAL_WIDTH + 16, {
+    var goalLeft = Bodies.rectangle(fieldMarginX + 55, height / 2 + 5, GOAL_DEPTH + 20, GOAL_WIDTH + 16, {
         isStatic: true,
         isSensor: true,
         label: 'GoalLeft',
         render: { fillStyle: 'transparent' }
     });
 
-    var goalRight = Bodies.rectangle(width - fieldMarginX - 65, height / 2 + 5, GOAL_DEPTH + 50, GOAL_WIDTH + 16, {
+    var goalRight = Bodies.rectangle(width - fieldMarginX - 55, height / 2 + 5, GOAL_DEPTH + 20, GOAL_WIDTH + 16, {
         isStatic: true,
         isSensor: true,
         label: 'GoalRight',
@@ -485,6 +485,55 @@ document.addEventListener("DOMContentLoaded", function () {// event listner is u
         }, 1500);
     }
 
+    function resetGame(concedingTeam) {
+        // Remove existing dynamic bodies
+        if (players.length > 0) {
+            Composite.remove(engine.world, players);
+        }
+        if (ball) {
+            Composite.remove(engine.world, ball);
+        }
+        players = [];
+
+        // Calculate positions within field boundaries
+        var leftTeamX = fieldMarginX + 80;
+        var leftMidX = width * 0.3;
+        var rightMidX = width * 0.7;
+        var rightTeamX = width - fieldMarginX - 80;
+        
+        // 5 Red Players (Left side) - positioned within field
+        players.push(createPlayer(leftTeamX, height / 2, 'red'));  // Goalkeeper
+        players.push(createPlayer(leftMidX - 50, height / 2 - 100, 'red'));  // Defender
+        players.push(createPlayer(leftMidX - 50, height / 2 + 100, 'red'));  // Defender
+        players.push(createPlayer(leftMidX + 80, height / 2 - 60, 'red'));  // Forward
+        players.push(createPlayer(leftMidX + 80, height / 2 + 60, 'red'));  // Forward
+
+        // 5 Blue Players (Right side) - positioned within field
+        players.push(createPlayer(rightTeamX, height / 2, 'blue'));  // Goalkeeper
+        players.push(createPlayer(rightMidX + 50, height / 2 - 100, 'blue'));  // Defender
+        players.push(createPlayer(rightMidX + 50, height / 2 + 100, 'blue'));  // Defender
+        players.push(createPlayer(rightMidX - 80, height / 2 - 60, 'blue'));  // Forward
+        players.push(createPlayer(rightMidX - 80, height / 2 + 60, 'blue'));  // Forward
+
+        // Ball at center
+        ball = createBall(width / 2, height / 2);
+
+        Composite.add(engine.world, [...players, ball]);
+
+        // Reset state
+        gameState.isTurnActive = false;
+        gameState.canShoot = true;
+        gameState.score.red = 0;
+        gameState.score.blue = 0;
+        gameState.turn = 'red';
+        gameState.turnCount = 0;
+        updateTurnDisplay();
+        scoreRedEl.innerText = gameState.score.red;
+        scoreBlueEl.innerText = gameState.score.blue;
+    }
+
+    document.getElementById('reset').addEventListener('click', resetGame);
+
     function switchTurn() {
         gameState.turn = gameState.turn === 'red' ? 'blue' : 'red';
         gameState.turnCount++;
@@ -512,4 +561,5 @@ document.addEventListener("DOMContentLoaded", function () {// event listner is u
         render.canvas.width = container.clientWidth;
         render.canvas.height = container.clientHeight;
     });
+
 });
