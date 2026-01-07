@@ -181,26 +181,26 @@
 
 
 .top-bar {
-    width: 75%;                        /* long rectangle */
-    height: 90px;                       /* rectangle height */
-    background-color: rgba(95, 145, 199, 0.95); /* white with transparency */
-    border-radius: 60px;                /* makes it curved horizontally */
-    box-shadow: 0 6px 15px rgba(87, 134, 153, 0.25);
+    width: 75%;                       
+    height: 90px;                      
+    background-color: rgba(95, 145, 199, 0.95); 
+    border-radius: 60px;               
+    /* box-shadow: 0 6px 15px rgba(87, 134, 153, 0.25); */
 
     display: flex;
-    justify-content: space-between;     /* left, center, right spacing */
+    justify-content: space-between;     
     align-items: center;
-    padding: 0 40px;                    /* space inside rectangle */
+    padding: 0 40px;                   
 
     font-size: 40px;
     font-weight: bold;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.25); /* optional shadow */
+    box-shadow: 0 60px 15px -60px rgba(0,0,0,0.25); 
 
     /* 🔥 TOP CENTER POSITION */
-    position:absolute;                    /* stays at top of screen */
-    top: 0px;                           /* distance from top */
-    left: 50%;                           /* horizontal center */
-    transform: translateX(-50%);         /* center exactly */
+    position:absolute;                    
+    top: 0px;                           
+    left: 50%;                           
+    transform: translateX(-50%);         
    
 }
 
