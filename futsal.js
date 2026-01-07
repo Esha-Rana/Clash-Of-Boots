@@ -1,6 +1,6 @@
 // Wait for the DOM to load
-document.addEventListener("DOMContentLoaded", function () {
-    var container = document.querySelector('.futsal');
+document.addEventListener("DOMContentLoaded", function () {// event listner is used to run the function when the document is loaded.
+    var container = document.querySelector('.futsal'); //queryselector finds the html file using a css selector. this is method. it finds elements within the html file.
     if (container) {
         var w = container.clientWidth;
         var h = container.clientHeight;
@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
         Body = Matter.Body;
 
     // --- GAME STATE ---
-    var gameState = {
-        turn: 'red', // 'red' or 'blue'
-        isTurnActive: false, // true when objects are moving
-        score: { red: 0, blue: 0 },
+    var gameState = {  //var is the keyword, others are the object that are created in js or also called property.
+        turn: 'red', // 'red' or 'blue' whose turn it is
+        isTurnActive: false, // true when objects are moving //when to move
+        score: { red: 0, blue: 0 }, //nested object  can i shoot now 
         canShoot: true, // blocks input during movement
         turnCount: 0 // 1 to 30
     };
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var height = container.clientHeight;
 
     // --- PHYSICS SETUP ---
-    var engine = Engine.create();
+    var engine = Engine.create(); // matter.js engine creation, this engine calculates movement, handles collison, updates positions every frame.... so matter. js le yo sabai kaam garirako xa.
     engine.world.gravity.y = 0; // Top-down -> no gravity
 
     var render = Render.create({
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function createBall(x, y) {
         return Bodies.circle(x, y, BALL_RADIUS, {
             label: 'Ball',
-            restitution: 0.95,
+            restitution: 0.95,// bounciness of the ball, how much energy is conserved after the collision 
             frictionAir: 0.008,
             friction: 0.001,
             density: 0.0008,
