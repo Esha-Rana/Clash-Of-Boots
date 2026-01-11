@@ -562,7 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // --- INITIALIZATION ---
-    Render.run(render);
+    Render.run(render); 
     var runner = Runner.create();
     Runner.run(runner, engine);
 
