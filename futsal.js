@@ -77,6 +77,13 @@ var storedPowerup = {
         blue: null
     };
 
+    // stores size power for next turn
+var sizePower = {
+    red: false,
+    blue: false
+};
+
+
     // Powerup definitions - defines all available powerups with their properties
     var powerupTypes = [
         { 
@@ -256,6 +263,8 @@ var storedPowerup = {
 
     // --- BODIES CREATION ---
     function createPlayer(x, y, team) {
+        body.baseRadius = PLAYER_RADIUS; // store original player size
+
         var isRed = team === 'red';
         var texture = isRed ? 'img/red-player.png' : 'img/blue-player.png';
         var body = Bodies.circle(x, y, PLAYER_RADIUS, {
@@ -425,6 +434,13 @@ var storedPowerup = {
                 if (Matter.Vertices.contains(b.vertices, { x: x, y: y })) {
                     selectedBody = b;
                     dragStart = { x: x, y: y };
+                    // apply size powerup to selected player
+if (sizePower[gameState.turn]) {
+    Matter.Body.scale(selectedBody, 1.4, 1.4);
+    selectedBody.isGiant = true;
+    sizePower[gameState.turn] = false;
+}
+
                     currentMousePos = { x: x, y: y };
                     break;
                 }
@@ -475,6 +491,11 @@ if (storedPowerup[gameState.turn]) {
     currentMaxForce = baseForce * 1.6;
     storedPowerup[gameState.turn] = false; // consume after one shot
 }
+// giant player gets double power
+if (selectedBody.isGiant) {
+    currentMaxForce *= 2;
+}
+
 
         var sizeMultiplier = 1; // Normal size
         
@@ -506,6 +527,12 @@ if (storedPowerup[gameState.turn]) {
             gameState.canShoot = false;
             gameState.isTurnActive = true;
         }
+
+        // reset size after shot
+if (selectedBody.isGiant) {
+    Matter.Body.scale(selectedBody, 1 / 1.4, 1 / 1.4);
+    selectedBody.isGiant = false;
+}
 
         selectedBody = null;
         dragStart = null;
@@ -912,7 +939,13 @@ function collectMysteryBox(team) {
     mysteryBox = null;
     mysteryBoxTurn = null;
 
-    storedPowerup[team] = true;
+    // randomly give speed or size powerup
+if (Math.random() < 0.5) {
+    storedPowerup[team] = true;   // speed
+} else {
+    sizePower[team] = true;       // size
+}
+
 }
 
 
