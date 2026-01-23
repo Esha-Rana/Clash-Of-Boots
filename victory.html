@@ -4,21 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clash-Of-Boots</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="victory.css" type="text/css">
+    <script src="music.js"></script>
 </head>
 <body>
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <div class="audio-btn active" id="musicBtn" title="Toggle Music">
+            <i class="fa-solid fa-music"></i>
+        </div>
+        <div class="audio-btn active" id="sfxBtn" title="Toggle Sound Effects">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+    </div>
+
     <div class="background">
         <div class="victory-box">
             <div class="victory"></div>
         </div>
         <div class="options-container">
             <div class="play-box">
-                <a href="futsal.html">
+                <a href="futsal.html" onclick="playClickSound(event)">
                     <div class="play"></div>
                 </a>
             </div>
             <div class="exit-box">
-                <a href="start.html">
+                <a href="start.html" onclick="playClickSound(event)">
                     <div class="exit"></div>
                 </a>
             </div>
