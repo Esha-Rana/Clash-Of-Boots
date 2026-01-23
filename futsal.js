@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Play kick sound
             if (window.musicManager) {
-                window.musicManager.playSound('./audio/goal.mp3', 0.4);
+                window.musicManager.playSound('./audio/goal.mp3', 1);
             }
 
             gameState.canShoot = false;
@@ -657,7 +657,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Play goal sound
         if (window.musicManager) {
-            window.musicManager.playSound('./audio/goal.mp3', 0.8);
+            window.musicManager.playSound('./audio/goal2.mp3', 0.8);
         }
 
         // Update score displays
@@ -922,7 +922,7 @@ function collectMysteryBox(team) {
 
     // Play powerup sound
     if (window.musicManager) {
-        window.musicManager.playSound('./audio/goal.mp3', 0.6);
+        window.musicManager.playSound('./audio/mystery.wav', 0.6);
     }
 
     alert(team.toUpperCase() + ' got ' + powerupName + '!');
