@@ -391,11 +391,12 @@ document.addEventListener("DOMContentLoaded", function () { // so the domcontent
                     dragStart = { x: x, y: y };
                     if (sizePower[gameState.turn]) {
                         // Update sprite scale along with body scale
-                        Matter.Body.scale(selectedBody, 1.4, 1.4);
+                        Matter.Body.scale(selectedBody, 1.5, 1.5);
+                        Matter.Body.setDensity(selectedBody, 0.02); // 10x normal density - UNSTOPPABLE
                         // Ensure sprite exists before scaling
                         if (selectedBody.render.sprite) {
-                            selectedBody.render.sprite.xScale *= 1.4;
-                            selectedBody.render.sprite.yScale *= 1.4;
+                            selectedBody.render.sprite.xScale *= 1.5;
+                            selectedBody.render.sprite.yScale *= 1.5;
                         }
                         selectedBody.isGiant = true;
                         sizePower[gameState.turn] = false;
@@ -453,8 +454,8 @@ document.addEventListener("DOMContentLoaded", function () { // so the domcontent
 
         // Apply giant player extra force
         if (selectedBody.isGiant) {
-            currentMaxForce *= 2;
-            console.log(gameState.turn.toUpperCase() + ' GIANT PLAYER! Double power: ' + currentMaxForce);
+            currentMaxForce *= 25; // Massive force for massive mass
+            console.log(gameState.turn.toUpperCase() + ' GIANT PLAYER! GOD MODE POWER: ' + currentMaxForce);
         }
 
         // Apply decreased speed if opponent used slow powerup
@@ -776,10 +777,11 @@ document.addEventListener("DOMContentLoaded", function () { // so the domcontent
         for (var i = 0; i < bodies.length; i++) {
             var b = bodies[i];
             if (b.isGiant) {
-                Matter.Body.scale(b, 1 / 1.4, 1 / 1.4);
+                Matter.Body.scale(b, 1 / 1.5, 1 / 1.5);
+                Matter.Body.setDensity(b, 0.002); // Reset to normal density
                 if (b.render.sprite) {
-                    b.render.sprite.xScale /= 1.4;
-                    b.render.sprite.yScale /= 1.4;
+                    b.render.sprite.xScale /= 1.5;
+                    b.render.sprite.yScale /= 1.5;
                 }
                 b.isGiant = false;
             }
@@ -951,7 +953,6 @@ function collectMysteryBox(team) {
         console.log('Gave Slow Opponent to', team, '-> slows', opponent);
     }
 
-    alert(team.toUpperCase() + ' got ' + powerupName + '!');
     showNotification(powerupName, team);
 }
 
