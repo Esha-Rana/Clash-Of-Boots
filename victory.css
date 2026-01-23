@@ -29,7 +29,6 @@ box-sizing: border-box;
     height: 20vh;
     display: flex;
     justify-content:space-evenly;  
-   
 }
 .play-box,.exit-box{
     width: 20%;
@@ -46,6 +45,7 @@ box-sizing: border-box;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
 }
 
 .play{
@@ -58,3 +58,47 @@ box-sizing: border-box;
     background-position: right;
 }
 
+/* Audio Controls - LEFT SIDE */
+.audio-controls {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.audio-btn {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.audio-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+.audio-btn.active {
+    background-color: #4CAF50;
+}
+
+.audio-btn i {
+    font-size: 24px;
+    color: white;
+}
+
+.audio-btn.muted {
+    background-color: #ff4444;
+}
+
+.audio-btn.muted:hover {
+    background-color: #cc0000;
+}

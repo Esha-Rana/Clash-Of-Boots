@@ -7,33 +7,35 @@
     <title>Clash-Of-Boots</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="futsal.css" type="text/css">
+    <script src="music.js"></script>
 </head>
 
 <body>
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <div class="audio-btn active" id="musicBtn" title="Toggle Music">
+            <i class="fa-solid fa-music"></i>
+        </div>
+        <div class="audio-btn active" id="sfxBtn" title="Toggle Sound Effects">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+    </div>
     
     <div class="top-bar">
-    <span class="left-score"></span>
-    <span class="center-text" style="padding-left: 20px; font-size: 55px;">VS</span>
-    <span class="right-score"></span>
-</div>
+        <span class="left-score"></span>
+        <span class="center-text" style="padding-left: 20px; font-size: 55px;">VS</span>
+        <span class="right-score"></span>
+    </div>
+    
     <div class="background">
-
         <div class="right">
             <div class="menu">
                 <i class="fa-solid fa-list "></i>
-                <div class="dropdown">
-                   
-                    <ul>
-                        <li id="reset">Restart</li>
-                        <a href ="start.html">Exit</a>
-                    </ul>
-                </div>
+                <div class="dropdown"></div>
             </div>
         </div>
 
         <div class="team-container">
-            
-
             <div class="team-1-box">
                 <div class="team-1"> </div>
                 <div class="team-red">
@@ -44,7 +46,6 @@
             <div class="turn-board">
                 <div class="turn">
                     <p>0/30</p>
-
                 </div>
             </div>
             <div class="team-2-box">
@@ -59,23 +60,19 @@
             <div class="futsal"></div>
         </div>
     </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <script src="futsal.js"></script> 
 
     <script>
-        const player1 = localStorage.getItem("player1") || "Player 1";
-        const player2 = localStorage.getItem("player2") || "Player 2";
+        const player1 = sessionStorage.getItem("player1") || "Player 1";
+        const player2 = sessionStorage.getItem("player2") || "Player 2";
 
         document.querySelector(".red-name").innerText = player1;
         document.querySelector(".blue-name").innerText = player2;
+    </script>   
 
-
-</script>   
-
-<body>
-
-
-    <!-- PAUSE OVERLAY GOES HERE -->
+    <!-- PAUSE OVERLAY -->
     <div id="pauseOverlay" class="pause-overlay hidden">
         <div class="pause-popup">
             <h2>Game Paused</h2>
@@ -86,7 +83,4 @@
     </div>
 
 </body>
-
-</body>
-
 </html>

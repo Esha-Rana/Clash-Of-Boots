@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="gamemode.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Mode</title>
+    <script src="music.js"></script>
 </head>
-
 <body>
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <div class="audio-btn active" id="musicBtn" title="Toggle Music">
+            <i class="fa-solid fa-music"></i>
+        </div>
+        <div class="audio-btn active" id="sfxBtn" title="Toggle Sound Effects">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+    </div>
+
     <div class="game-mode">
         <div class="small-box">
             <div class="small-logo"></div>
@@ -17,17 +27,16 @@
             <div class="title"></div>
         </div>
         <div class="box">
-            <a href="futsal.html?goals=1">
+            <a href="futsal.html?goals=1" onclick="playClickSound(event)">
                 <div class="one"></div>
             </a>
-            <a href="futsal.html?goals=3">
+            <a href="futsal.html?goals=3" onclick="playClickSound(event)">
                 <div class="three"></div>
             </a>
-            <a href="futsal.html?goals=5">
+            <a href="futsal.html?goals=5" onclick="playClickSound(event)">
                 <div class="five"></div>
             </a>
         </div>
     </div>
 </body>
-
 </html>
