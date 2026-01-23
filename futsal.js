@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const pauseOverlay = document.getElementById('pauseOverlay');
     const resumeBtn = document.getElementById('resumeBtn');
     const restartBtn = document.getElementById('restartBtn');
-   
+
     // Pause overlay (activated from menu or ESC key)
     if (menuBtn) {
         menuBtn.addEventListener('click', (e) => {
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var turnIndicator = document.querySelector('.turn p');
     var leftScoreEl = document.querySelector('.left-score');
     var rightScoreEl = document.querySelector('.right-score');
-    
+
     container = document.querySelector('.futsal');
     width = container.clientWidth;
     height = container.clientHeight;
@@ -411,7 +411,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (Matter.Vertices.contains(b.vertices, { x: x, y: y })) {
                     selectedBody = b;
                     dragStart = { x: x, y: y };
-                    
+
                     // Apply size powerup when selecting
                     if (sizePower[gameState.turn]) {
                         Matter.Body.scale(selectedBody, 1.4, 1.4);
@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         selectedBody.isGiant = true;
                         sizePower[gameState.turn] = false;
                     }
-                    
+
                     currentMousePos = { x: x, y: y };
                     break;
                 }
@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var dy = dragStart.y - y;
 
         var rawDistance = Math.sqrt(dx * dx + dy * dy);
-        
+
         var baseForce = 0.10;
         var currentMaxForce = baseForce;
 
@@ -480,9 +480,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (selectedBody.isGiant) {
             currentMaxForce *= 2;
-        }
-
-        var forceMagnitude = Math.min(rawDistance * 0.0007, currentMaxForce);
             currentMaxForce *= 25; // Massive force for massive mass
             console.log(gameState.turn.toUpperCase() + ' GIANT PLAYER! GOD MODE POWER: ' + currentMaxForce);
         }
@@ -524,7 +521,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Rendering overlay graphics
     Events.on(render, 'afterRender', function () {
         var ctx = render.context;
-        
+
         // Draw mystery box
         if (mysteryBox) {
             ctx.fillStyle = '#FFFFFF';
@@ -943,8 +940,6 @@ function collectMysteryBox(team) {
     if (lastPowerupGiven === 'speed') {
         powerupType = Math.random() < 0.5 ? 'giant' : 'slowOpponent';
     } else if (lastPowerupGiven === 'giant') {
-        powerupType = 'speed';
-    } else {
         powerupType = Math.random() < 0.5 ? 'speed' : 'slowOpponent';
     } else if (lastPowerupGiven === 'slowOpponent') {
         powerupType = Math.random() < 0.5 ? 'speed' : 'giant';
@@ -960,15 +955,6 @@ function collectMysteryBox(team) {
         storedPowerup[team] = true;
         powerupName = 'Speed Boost ⚡';
         lastPowerupGiven = 'speed';
-    } else {
-        sizePower[team] = true;
-        powerupName = 'Giant Player 👤';
-        lastPowerupGiven = 'giant';
-    }
-
-    // Play powerup sound
-    if (window.musicManager) {
-        window.musicManager.playSound('./audio/mystery.wav', 0.6);
         console.log('Gave Speed Boost to', team);
     } else if (powerupType === 'giant') {
         sizePower[team] = true;
@@ -982,6 +968,11 @@ function collectMysteryBox(team) {
         powerupName = 'Slow Opponent 🐢';
         lastPowerupGiven = 'slowOpponent';
         console.log('Gave Slow Opponent to', team, '-> slows', opponent);
+    }
+
+    // Play powerup sound
+    if (window.musicManager) {
+        window.musicManager.playSound('./audio/mystery.wav', 0.6);
     }
 
     showNotification(powerupName, team);
