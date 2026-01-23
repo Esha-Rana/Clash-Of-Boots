@@ -32,10 +32,19 @@
             <div class="menu">
                 <i class="fa-solid fa-list "></i>
                 <div class="dropdown"></div>
+                <div class="dropdown">
+
+                    <ul>
+                        <li id="reset">Restart</li>
+                        <a href="start.html">Exit</a>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="team-container">
+
+
             <div class="team-1-box">
                 <div class="team-1"> </div>
                 <div class="team-red">
@@ -83,4 +92,18 @@
     </div>
 
 </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="futsal.js"></script>
+
+    <script>
+        const player1 = localStorage.getItem("player1") || "Player 1";
+        const player2 = localStorage.getItem("player2") || "Player 2";
+
+        document.querySelector(".red-name").innerText = player1;
+        document.querySelector(".blue-name").innerText = player2;
+    </script>
+</body>
+
+</html>
+
 </html>
