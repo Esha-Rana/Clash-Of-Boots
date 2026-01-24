@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', function() {
         'start.html': { path: './audio/menu-music.mp3', loop: true },
         'player.html': { path: './audio/menu-music.mp3', loop: true },
         'gamemode.html': { path: './audio/menu-music.mp3', loop: true },
-        'futsal.html': { path: './audio/menu-music.mp3', loop: true },
-        'victory.html': { path: './audio/victory-music.mp3', loop: true }
+        'futsal.html': { path: './audio/game-music.mp3', loop: true },
+        'victory.html': { path: './audio/victory.mp3', loop: false }
     };
     
     if (pageTracks[currentPage]) {
@@ -244,15 +244,15 @@ function initializeAudioButtons() {
             
             // Play test sound when enabling
             if (nowEnabled) {
-                window.musicManager.playSound('./audio/click2.mp3', 0.6);
+                window.musicManager.playSound('./audio/click2.mp3', 1);
             }
         });
     }
 }
 
-// Global function for click sounds
-function playClickSound(event) {
+// Global function for click sounds - FIXED
+window.playClickSound = function(event) {
     if (window.musicManager) {
-        window.musicManager.playSound('./audio/click2.mp3', 0.6);
+        window.musicManager.playSound('./audio/click2.mp3', 1);
     }
 }

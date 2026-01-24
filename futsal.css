@@ -265,11 +265,13 @@
 }
 
 /* Audio Controls - LEFT SIDE */
+/* Audio Controls - LEFT SIDE - STACKED VERTICALLY */
 .audio-controls {
     position: fixed;
     top: 20px;
     left: 20px;
     display: flex;
+    flex-direction: column;
     gap: 10px;
     z-index: 1000;
 }
