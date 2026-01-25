@@ -837,8 +837,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Remove mystery box if expired
-        if (mysteryBox && gameState.turnCount > mysteryBoxTurn) {
+        // Remove mystery box if it has survived for 2 turns (one round)
+        // This grants both players a chance to get it.
+        if (mysteryBox && mysteryBoxTurn !== null && gameState.turnCount > mysteryBoxTurn + 1) {
             Composite.remove(engine.world, mysteryBox);
             mysteryBox = null;
             mysteryBoxTurn = null;
@@ -1076,7 +1077,9 @@ function spawnMysteryBox() {
 
 // Mystery box collection
 function collectMysteryBox(team) {
-    Matter.Composite.remove(engine.world, mysteryBox);
+    if (!mysteryBox) return;
+
+    Matter.Composite.remove(engine.world, mysteryBox);//engine. world is the composite
     mysteryBox = null;
     mysteryBoxTurn = null;
 
