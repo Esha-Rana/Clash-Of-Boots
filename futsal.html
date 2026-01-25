@@ -21,6 +21,12 @@
         </div>
     </div>
 
+       <!-- VS Overlay -->
+<div id="vs-overlay">
+    <div id="vs-text">Player 1 VS Player 2</div>
+</div>
+<div id="goal-confetti" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
+
     <div class="top-bar">
         <span class="left-score"></span>
         <span class="center-text" style="padding-left: 20px; font-size: 55px;">VS</span>
@@ -40,7 +46,7 @@
             <div class="team-1-box">
                 <div class="team-1"> </div>
                 <div class="team-red">
-                    <p class="player-name red-name">player 1</p>
+                    <p class="player-name red-name"></p>
                     <p class="score-count red-score">0</p>
                 </div>
             </div>
@@ -51,7 +57,7 @@
             </div>
             <div class="team-2-box">
                 <div class="team-blue">
-                    <p class="player-name blue-name">player 2</p>
+                    <p class="player-name blue-name"></p>
                     <p class="score-count blue-score">0</p>
                 </div>
                 <div class="team-2"> </div>
@@ -65,13 +71,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <script src="futsal.js"></script>
 
-    <script>
-        const player1 = sessionStorage.getItem("player1") || "Player 1";
-        const player2 = sessionStorage.getItem("player2") || "Player 2";
+ <script>
 
-        document.querySelector(".red-name").innerText = player1;
-        document.querySelector(".blue-name").innerText = player2;
-    </script>
+document.addEventListener("DOMContentLoaded", function () {
+    const player1 = localStorage.getItem("player1") || "Player 1";
+    const player2 = localStorage.getItem("player2") || "Player 2";
+
+    // ✅ ALWAYS update scoreboard immediately
+    const leftScore = document.querySelector(".left-score");
+    const centerText = document.querySelector(".center-text");
+    const rightScore = document.querySelector(".right-score");
+
+    if (leftScore) leftScore.innerText = player1;
+    if (centerText) centerText.innerText = "VS";
+    if (rightScore) rightScore.innerText = player2;
+
+    // --- VS Overlay ---
+    const vsText = document.getElementById("vs-text");
+    const overlay = document.getElementById("vs-overlay");
+
+    if (vsText) {
+        vsText.innerText = `${player1} VS ${player2}` ;
+    }
+
+    if (overlay && vsText) {
+        vsText.addEventListener("animationend", () => {
+            overlay.remove();
+
+            // 🔥 notify futsal.js that VS animation finished
+            document.dispatchEvent(new Event("vsAnimationFinished"));
+        });
+    } else {
+        // fallback (no overlay)
+        document.dispatchEvent(new Event("vsAnimationFinished"));
+    }
+});
+
+</script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <!-- PAUSE OVERLAY -->
     <div id="pauseOverlay" class="pause-overlay hidden">

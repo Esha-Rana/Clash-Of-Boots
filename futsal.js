@@ -1,6 +1,18 @@
 // Global variables
 var width, height, engine, mysteryBox, mysteryBoxTurn, gameState, lastMysteryBoxSpawn, storedPowerup, sizePower, opponentSlowed, players, ball, lastPowerupGiven;
 
+// ✅ LISTEN FOR VS ANIMATION BEFORE DOMContentLoaded
+var vsAnimationCompleted = false;
+document.addEventListener("vsAnimationFinished", function() {
+    vsAnimationCompleted = true;
+    console.log("VS Animation finished - Ready to show RED TURN!");
+    
+    // Only trigger if game is already initialized
+    if (typeof gameState !== 'undefined' && typeof showTurnAnimation === 'function') {
+        showTurnAnimation('red');
+    }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     var container = document.querySelector('.futsal');
     if (container) {
@@ -488,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // User reported it's too fast with 11.25x force.
             // Reducing force multiplier to 8x (approx 70% of mass). 
             // This will make it accelerate slower (feel heavier) but still have huge momentum.
-            var forceFactor = 6.0; //this is the change in power, when the giant hits the ball or player the force gets multiplied by 6.
+            var forceFactor = 8.0; //this is the change in power, when the giant hits the ball or player the force gets multiplied by 6.
             currentMaxForce *= forceFactor;
             dragMultiplier *= forceFactor;
             console.log(gameState.turn.toUpperCase() + ' GIANT PLAYER! Force scaled by ' + forceFactor);
@@ -707,17 +719,32 @@ document.addEventListener("DOMContentLoaded", function () {
             if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
         }
 
+         showGoalConfetti(scoringTeam);
+
         // Check for victory
         if (gameState.score[scoringTeam] >= gameState.maxGoals) {
-            setTimeout(function () {
-                window.location.href = "victory.html?winner=" + scoringTeam;
-            }, 500);
-            return;
-        }
+                        //  SAVE WINNER TEAM
+                localStorage.setItem("winnerTeam", scoringTeam);
 
-        // Switch turn to other team
-        gameState.turn = scoringTeam === 'red' ? 'blue' : 'red';
+                //  GET PLAYER NAMES (already saved earlier by you)
+                const player1 = localStorage.getItem("player1") || "Player 1";
+                const player2 = localStorage.getItem("player2") || "Player 2";
 
+                //  SAVE WINNER NAME
+                if (scoringTeam === "red") {
+                    localStorage.setItem("winnerName", player1);
+                } else {
+                    localStorage.setItem("winnerName", player2);
+                }
+
+                //  GO TO VICTORY PAGE
+                setTimeout(function () {
+                    window.location.href = "victory.html";
+                }, 500);
+
+                return;
+            }
+            
         // Change formation after goal
         var formationKeys = Object.keys(formations);
         var otherFormations = formationKeys.filter(k => k !== gameState.currentFormation);
@@ -823,9 +850,6 @@ document.addEventListener("DOMContentLoaded", function () {
             opponentSlowed[gameState.turn] = false;
         }
 
-        gameState.turn = gameState.turn === 'red' ? 'blue' : 'red';
-        gameState.turnCount++;
-
         // Spawn mystery box logic
         if (gameState.turnCount === 3) {
             spawnMysteryBox();
@@ -840,6 +864,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
+        gameState.turn = gameState.turn === 'red' ? 'blue' : 'red';
+        gameState.turnCount++;
         // Time limit check
         if (gameState.turnCount > 30) {
             alert("Game Over! Time limit reached.");
@@ -847,14 +873,69 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         updateTurnDisplay();
+        showTurnAnimation(gameState.turn);
     }
 
     function updateTurnDisplay() {
-        if (turnIndicator) {
             turnIndicator.innerText = gameState.turnCount + "/30";
             turnIndicator.style.color = "white";
         }
+    
+    function showTurnAnimation(turn){
+    // Create div for turn indicator
+    var turnEl = document.createElement('div');
+    turnEl.innerText = turn === 'red' ? '🔴 RED TURN' : '🔵 BLUE TURN';
+
+    // Common styles
+    turnEl.style.position = 'fixed';
+    turnEl.style.top = '120px';
+    turnEl.style.fontSize = '32px';
+    turnEl.style.fontWeight = 'bold';
+    turnEl.style.padding = '15px 25px';
+    turnEl.style.color = 'white';
+    turnEl.style.zIndex = 9999;
+    turnEl.style.opacity = 1;
+    turnEl.style.background = turn === 'red' ? 'crimson' : 'dodgerblue';
+    turnEl.style.pointerEvents = 'none'; // prevents clicks blocking
+
+    // Start offscreen & set border-radius correctly
+    if (turn === 'red') {
+        turnEl.style.left = '-350px';
+        turnEl.style.right = '';
+        turnEl.style.borderRadius = '0 40px 40px 0';
+    } else {
+        turnEl.style.right = '-350px';
+        turnEl.style.left = '';
+        turnEl.style.borderRadius = '40px 0 0 40px';
     }
+
+    document.body.appendChild(turnEl);
+
+    // Animate slide in
+    if (turn === 'red') {
+        gsap.to(turnEl, { duration: 0.8, left: '10px', ease: "power4.out" });
+    } else {
+        gsap.to(turnEl, { duration: 0.8, right: '10px', ease: "power4.out" });
+    }
+
+    // Fade out after delay
+    gsap.to(turnEl, {
+        duration: 0.8,
+        delay: 1.2,
+        opacity: 0,
+        onComplete: function() {
+            turnEl.remove();
+        }
+    });
+    
+    }
+
+     document.addEventListener("vsAnimationFinished", function(){
+        gameState.turn='red';
+         gameState.turnCount=0;
+        updateTurnDisplay();
+        showTurnAnimation('red');
+     });
 
     // Start renderer and physics engine
     Render.run(render);
@@ -868,6 +949,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateTurnDisplay();
     resetPositions();
+    
+    // Check if VS animation already completed before game loaded
+if (vsAnimationCompleted) {
+    console.log("VS already done, showing RED TURN now");
+    showTurnAnimation('red');
+}
+
+    // Show first RED turn at game start
 
     // Update score displays
     if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
@@ -879,6 +968,53 @@ document.addEventListener("DOMContentLoaded", function () {
         render.canvas.height = container.clientHeight;
     });
 });
+function showGoalConfetti(team) {
+    const container = document.getElementById('goal-confetti');
+    const goalColor = team === 'red' ? 'crimson' : 'dodgerblue';
+
+    // Position at goal center
+    const goalX = team === 'red' ? window.innerWidth - 100 : 100;  // adjust for exact goal center
+    const goalY = window.innerHeight / 2;  // middle of field vertically
+
+    for (let i = 0; i < 25; i++) {
+        const circle = document.createElement('div');
+        circle.style.position = 'absolute';
+        const size = Math.random() * 12 + 8;  // size between 8-20px
+        circle.style.width = circle.style.height = size + 'px';
+        circle.style.backgroundColor = goalColor;
+        circle.style.borderRadius = '50%';
+        circle.style.left = goalX + 'px';
+        circle.style.top = goalY + 'px';
+        circle.style.opacity = 0;
+
+        container.appendChild(circle);
+
+        // Random burst direction
+        const angle = Math.random() * Math.PI * 2; // 0 → 360 degrees
+        const distance = Math.random() * 60 + 30;  // how far it pops out
+
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+
+        // Animate
+        gsap.to(circle, {
+            duration: 2,  // pop duration
+            x: x,
+            y: y,
+            scale: 1,
+            opacity: 1,
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.to(circle, {
+                    duration: 2.5,
+                    opacity: 0,
+                    scale: 0,
+                    onComplete: () => circle.remove()
+                });
+            }
+        });
+    }
+}
 
 // Pause and resume functions
 function pauseGame() {
