@@ -3,10 +3,10 @@ var width, height, engine, mysteryBox, mysteryBoxTurn, gameState, lastMysteryBox
 
 // ✅ LISTEN FOR VS ANIMATION BEFORE DOMContentLoaded
 var vsAnimationCompleted = false;
-document.addEventListener("vsAnimationFinished", function() {
+document.addEventListener("vsAnimationFinished", function () {
     vsAnimationCompleted = true;
     console.log("VS Animation finished - Ready to show RED TURN!");
-    
+
     // Only trigger if game is already initialized
     if (typeof gameState !== 'undefined' && typeof showTurnAnimation === 'function') {
         showTurnAnimation('red');
@@ -491,7 +491,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Logic moved inside the shot execution block to prevent wasting it on cancelled drags
         var dragMultiplier = 0.0006;
         if (storedPowerup[gameState.turn]) {
-            currentMaxForce = baseForce * 6.0; // Drastic increase
+            currentMaxForce = baseForce * 5.0; // Drastic increase
             dragMultiplier = 0.0018; // 3x sensitivity - barely dragging triggers huge power
         }
 
@@ -500,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // User reported it's too fast with 11.25x force.
             // Reducing force multiplier to 8x (approx 70% of mass). 
             // This will make it accelerate slower (feel heavier) but still have huge momentum.
-            var forceFactor = 8.0; //this is the change in power, when the giant hits the ball or player the force gets multiplied by 6.
+            var forceFactor = 5.0; //this is the change in power, when the giant hits the ball or player the force gets multiplied by 6.
             currentMaxForce *= forceFactor;
             dragMultiplier *= forceFactor;
             console.log(gameState.turn.toUpperCase() + ' GIANT PLAYER! Force scaled by ' + forceFactor);
@@ -719,32 +719,32 @@ document.addEventListener("DOMContentLoaded", function () {
             // if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
         }
 
-         showGoalConfetti(scoringTeam);
+        showGoalConfetti(scoringTeam);
 
         // Check for victory
         if (gameState.score[scoringTeam] >= gameState.maxGoals) {
-                        //  SAVE WINNER TEAM
-                localStorage.setItem("winnerTeam", scoringTeam);
+            //  SAVE WINNER TEAM
+            localStorage.setItem("winnerTeam", scoringTeam);
 
-                //  GET PLAYER NAMES (already saved earlier by you)
-                const player1 = localStorage.getItem("player1") || "Player 1";
-                const player2 = localStorage.getItem("player2") || "Player 2";
+            //  GET PLAYER NAMES (already saved earlier by you)
+            const player1 = localStorage.getItem("player1") || "Player 1";
+            const player2 = localStorage.getItem("player2") || "Player 2";
 
-                //  SAVE WINNER NAME
-                if (scoringTeam === "red") {
-                    localStorage.setItem("winnerName", player1);
-                } else {
-                    localStorage.setItem("winnerName", player2);
-                }
-
-                //  GO TO VICTORY PAGE
-                setTimeout(function () {
-                    window.location.href = "victory.html";
-                }, 500);
-
-                return;
+            //  SAVE WINNER NAME
+            if (scoringTeam === "red") {
+                localStorage.setItem("winnerName", player1);
+            } else {
+                localStorage.setItem("winnerName", player2);
             }
-            
+
+            //  GO TO VICTORY PAGE
+            setTimeout(function () {
+                window.location.href = "victory.html";
+            }, 500);
+
+            return;
+        }
+
         // Change formation after goal
         var formationKeys = Object.keys(formations);
         var otherFormations = formationKeys.filter(k => k !== gameState.currentFormation);
@@ -877,65 +877,65 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateTurnDisplay() {
-            turnIndicator.innerText = gameState.turnCount + "/30";
-            turnIndicator.style.color = "white";
+        turnIndicator.innerText = gameState.turnCount + "/30";
+        turnIndicator.style.color = "white";
+    }
+
+    function showTurnAnimation(turn) {
+        // Create div for turn indicator
+        var turnEl = document.createElement('div');
+        turnEl.innerText = turn === 'red' ? '🔴 RED TURN' : '🔵 BLUE TURN';
+
+        // Common styles
+        turnEl.style.position = 'fixed';
+        turnEl.style.top = '120px';
+        turnEl.style.fontSize = '32px';
+        turnEl.style.fontWeight = 'bold';
+        turnEl.style.padding = '15px 25px';
+        turnEl.style.color = 'white';
+        turnEl.style.zIndex = 9999;
+        turnEl.style.opacity = 1;
+        turnEl.style.background = turn === 'red' ? 'crimson' : 'dodgerblue';
+        turnEl.style.pointerEvents = 'none'; // prevents clicks blocking
+
+        // Start offscreen & set border-radius correctly
+        if (turn === 'red') {
+            turnEl.style.left = '-350px';
+            turnEl.style.right = '';
+            turnEl.style.borderRadius = '0 40px 40px 0';
+        } else {
+            turnEl.style.right = '-350px';
+            turnEl.style.left = '';
+            turnEl.style.borderRadius = '40px 0 0 40px';
         }
-    
-    function showTurnAnimation(turn){
-    // Create div for turn indicator
-    var turnEl = document.createElement('div');
-    turnEl.innerText = turn === 'red' ? '🔴 RED TURN' : '🔵 BLUE TURN';
 
-    // Common styles
-    turnEl.style.position = 'fixed';
-    turnEl.style.top = '120px';
-    turnEl.style.fontSize = '32px';
-    turnEl.style.fontWeight = 'bold';
-    turnEl.style.padding = '15px 25px';
-    turnEl.style.color = 'white';
-    turnEl.style.zIndex = 9999;
-    turnEl.style.opacity = 1;
-    turnEl.style.background = turn === 'red' ? 'crimson' : 'dodgerblue';
-    turnEl.style.pointerEvents = 'none'; // prevents clicks blocking
+        document.body.appendChild(turnEl);
 
-    // Start offscreen & set border-radius correctly
-    if (turn === 'red') {
-        turnEl.style.left = '-350px';
-        turnEl.style.right = '';
-        turnEl.style.borderRadius = '0 40px 40px 0';
-    } else {
-        turnEl.style.right = '-350px';
-        turnEl.style.left = '';
-        turnEl.style.borderRadius = '40px 0 0 40px';
-    }
-
-    document.body.appendChild(turnEl);
-
-    // Animate slide in
-    if (turn === 'red') {
-        gsap.to(turnEl, { duration: 0.8, left: '10px', ease: "power4.out" });
-    } else {
-        gsap.to(turnEl, { duration: 0.8, right: '10px', ease: "power4.out" });
-    }
-
-    // Fade out after delay
-    gsap.to(turnEl, {
-        duration: 0.8,
-        delay: 1.2,
-        opacity: 0,
-        onComplete: function() {
-            turnEl.remove();
+        // Animate slide in
+        if (turn === 'red') {
+            gsap.to(turnEl, { duration: 0.8, left: '10px', ease: "power4.out" });
+        } else {
+            gsap.to(turnEl, { duration: 0.8, right: '10px', ease: "power4.out" });
         }
-    });
-    
+
+        // Fade out after delay
+        gsap.to(turnEl, {
+            duration: 0.8,
+            delay: 1.2,
+            opacity: 0,
+            onComplete: function () {
+                turnEl.remove();
+            }
+        });
+
     }
 
-     document.addEventListener("vsAnimationFinished", function(){
-        gameState.turn='red';
-         gameState.turnCount=0;
+    document.addEventListener("vsAnimationFinished", function () {
+        gameState.turn = 'red';
+        gameState.turnCount = 0;
         updateTurnDisplay();
         showTurnAnimation('red');
-     });
+    });
 
     // Start renderer and physics engine
     Render.run(render);
@@ -949,12 +949,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateTurnDisplay();
     resetPositions();
-    
+
     // Check if VS animation already completed before game loaded
-if (vsAnimationCompleted) {
-    console.log("VS already done, showing RED TURN now");
-    showTurnAnimation('red');
-}
+    if (vsAnimationCompleted) {
+        console.log("VS already done, showing RED TURN now");
+        showTurnAnimation('red');
+    }
 
     // Show first RED turn at game start
 
