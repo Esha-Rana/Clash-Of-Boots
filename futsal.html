@@ -78,9 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const player2 = localStorage.getItem("player2") || "Player 2";
 
     // ✅ ALWAYS update scoreboard immediately
-    const leftScore = document.querySelector(".left-score");
+    const leftScore = document.querySelector(".red-name");
     const centerText = document.querySelector(".center-text");
-    const rightScore = document.querySelector(".right-score");
+    const rightScore = document.querySelector(".blue-name");
 
     if (leftScore) leftScore.innerText = player1;
     if (centerText) centerText.innerText = "VS";

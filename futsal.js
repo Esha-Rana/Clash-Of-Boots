@@ -713,10 +713,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update score displays
         if (scoringTeam === 'red') {
             scoreRedEl.innerText = gameState.score.red;
-            if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
+            // if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
         } else {
             scoreBlueEl.innerText = gameState.score.blue;
-            if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
+            // if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
         }
 
          showGoalConfetti(scoringTeam);
@@ -813,8 +813,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update UI
         scoreRedEl.innerText = gameState.score.red;
         scoreBlueEl.innerText = gameState.score.blue;
-        if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
-        if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
+        // if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
+        // if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
         updateTurnDisplay();
 
         resetPositions('2-2');
@@ -959,8 +959,8 @@ if (vsAnimationCompleted) {
     // Show first RED turn at game start
 
     // Update score displays
-    if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
-    if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
+    // if (leftScoreEl) leftScoreEl.innerText = gameState.score.red;
+    // if (rightScoreEl) rightScoreEl.innerText = gameState.score.blue;
 
     // Handle window resize
     window.addEventListener('resize', function () {

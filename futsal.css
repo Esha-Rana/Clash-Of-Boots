@@ -109,6 +109,7 @@
 .red-score{
     border-right: 3px solid white;
     padding-right: 8px;
+    float: right;
 }
 
 .blue-score{
@@ -184,6 +185,7 @@
     top: 5px;
     left:250px;
     color:rgb(32, 11, 51);
+    width: 445px;
 }
 
 .team-blue {
