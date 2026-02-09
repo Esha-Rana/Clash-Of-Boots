@@ -500,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // User reported it's too fast with 11.25x force.
             // Reducing force multiplier to 8x (approx 70% of mass). 
             // This will make it accelerate slower (feel heavier) but still have huge momentum.
-            var forceFactor = 5.0; //this is the change in power, when the giant hits the ball or player the force gets multiplied by 6.
+            var forceFactor = 3.0; //this is the change in power, when the giant hits the ball or player the force gets multiplied by 6.
             currentMaxForce *= forceFactor;
             dragMultiplier *= forceFactor;
             console.log(gameState.turn.toUpperCase() + ' GIANT PLAYER! Force scaled by ' + forceFactor);
