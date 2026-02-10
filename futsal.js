@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    var WALL_THICKNESS = 10;
+    var WALL_THICKNESS = 30;
     var PLAYER_RADIUS = 28;
     var BALL_RADIUS = 20;
     var GOAL_WIDTH = 120;
@@ -176,13 +176,13 @@ document.addEventListener("DOMContentLoaded", function () {
         Bodies.rectangle(width / 2, fieldMarginY + 20, width, WALL_THICKNESS, {
             isStatic: true,
             label: 'WallTop',
-            render: { fillStyle: 'tansparent' }
+            render: { fillStyle: 'transparent' }
         }),
         // Bottom wall
         Bodies.rectangle(width / 2, height - fieldMarginY - 13, width, WALL_THICKNESS, {
             isStatic: true,
             label: 'WallBottom',
-            render: { fillStyle: 'tansparent' }
+            render: { fillStyle: 'transparent' }
         }),
         // Left wall segments (above and below goal)
         Bodies.rectangle(fieldMarginX + 102, height / 2 - GOAL_WIDTH / 2 - 125, WALL_THICKNESS, (height - fieldMarginY * 2 - GOAL_WIDTH) / 2 + 5, {
