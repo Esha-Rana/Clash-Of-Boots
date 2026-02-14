@@ -19,10 +19,11 @@ box-sizing: border-box;
 .victory{
     width: 120%;
     height: 58vh;
-    /* background-image: url(/img/victory.png); */
-    background-size: 871px;
+    background-image: url(/img/victory.png);
+    background-size: 836px;
     background-repeat: no-repeat;
     background-position: center;
+    background-position-y: -123px;
 }
 .options-container{
     width: 100%;
@@ -100,7 +101,7 @@ box-sizing: border-box;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.55); /* opacity control */
+    background: rgba(0, 0, 0, 0.15); /* opacity control */
     z-index: 5;
     opacity: 0;
     animation: fadeInDim 0.4s ease forwards;
